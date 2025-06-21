@@ -30,25 +30,25 @@ export default function generate(fn){
 
                 const comparator = () => {
 
-                    let chosen = chosen ? chooser(globalStore.current) : globalStore.current
+                    let nextChosen = chosen ? chooser(globalStore.current) : globalStore.current
 
-                    if (chunk !== chosen && typeof (chosen) === "object" && !Array.isArray(chosen)){
+                    if (chunk !== nextChosen && typeof (nextChosen) === "object" && !Array.isArray(nextChosen)){
 
-                        chosen = Object.entries(chosen).reduce((acc,[key,value])=>(chunk[key]!==value) ? {...acc,[key]:value} : acc , chunk)
+                        nextChosen = Object.entries(nextChosen).reduce((acc,[key,value])=>(chunk[key]!==value) ? {...acc,[key]:value} : acc , chunk)
 
                     }
 
-                    if (chosen!==chunk){
+                    if (nextChosen!==chunk){
 
-                        setChunk(()=>chosen)
+                        setChunk(()=>nextChosen)
                     }
 
-                    subscriptions.push(comparator)
-
-                    return ()=>(subscriptions = subscriptions.filter(i => i !== comparator))
-
+                    
                 }
+                subscriptions.push(comparator)
 
+                return ()=>(subscriptions = subscriptions.filter(i => i !== comparator))
+                
             },dependencies || [chosen])
 
             return chosen
