@@ -1,6 +1,6 @@
 {
   "name": "newtk",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A minimal state management library built with modern React hooks.",
   "main": "index.js",
   "keywords": [
