@@ -13,7 +13,7 @@ export default function generate(fn){
 
             globalStore.current = Object.assign({}, globalStore.current, merge)
 
-            subscriptions.forEach(sub=>sub(globalStore.current))
+            globalStore.subscriptions.forEach(sub=>sub(globalStore.current))
         },
 
         ()=>globalStore.current
