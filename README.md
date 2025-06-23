@@ -76,7 +76,7 @@ const [useNewtkStore, api] = createStore(setupFn);
 
 ---
 
-### `v0.0.1` — Initial Release
+### `v1.0.0` — Initial Release
 
 * Introduced `generate()` function to create global state
 * Support for:
@@ -98,7 +98,7 @@ const [useStore] = generate((set, get) => ({
 
 ---
 
-### `v0.0.2` — Improved React Sync
+### `v1.0.2` — Improved React Sync
 
 * **Introduced `useRef` (`liveChunk`)** to avoid stale closures in effects
 * Selector fallback now spreads state (`{...state}`) to ensure fresh shallow copy
