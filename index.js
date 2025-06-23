@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 export default function generate(fn){
 
     let subscriptions = []
@@ -23,22 +23,25 @@ export default function generate(fn){
 
         (chooser,dependencies)=>{
 
-            let chosen = chooser ? chooser(globalStore.current) : globalStore.current
+            let chosen = chooser ? chooser(globalStore.current) : {...globalStore.current}
             const [chunk,setChunk] = useState(()=>chosen)
+            const liveChunk = useRef()
 
-            useEffect(()=>{
+            useEffect (()=>{liveChunk.current=chunk},[chunk])
+
+            useEffect( ()=>{ 
 
                 const comparator = () => {
 
-                    let nextChosen = chosen ? chooser(globalStore.current) : globalStore.current
+                    let nextChosen = chooser ? chooser(globalStore.current) : {...globalStore.current}
 
-                    if (chunk !== nextChosen && typeof (nextChosen) === "object" && !Array.isArray(nextChosen)){
+                    if (liveChunk.current !== nextChosen && typeof (nextChosen) === "object" && !Array.isArray(nextChosen)){
 
-                        nextChosen = Object.entries(nextChosen).reduce((acc,[key,value])=>(chunk[key]!==value) ? {...acc,[key]:value} : acc , chunk)
+                        nextChosen = Object.entries(nextChosen).reduce((acc,[key,value])=>(liveChunk.current[key]!==value) ? {...acc,[key]:value} : acc , liveChunk.current)
 
                     }
 
-                    if (nextChosen!==chunk){
+                    if (nextChosen!==liveChunk.current){
 
                         setChunk(()=>nextChosen)
                     }
