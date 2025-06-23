@@ -1,6 +1,6 @@
 {
   "name": "newtk",
-  "version": "0.0.5",
+  "version": "0.0.1",
   "description": "A minimal state management library built with modern React hooks.",
   "main": "index.js",
   "keywords": [
@@ -11,7 +11,9 @@
     "store",
     "global-state",
     "lightweight",
-    "zustand-alternative"
+    "zustand-alternative",
+    "Newton",
+    "newton-school"
   ],
   "author": "Kavya Katal",
   "license": "MIT",
