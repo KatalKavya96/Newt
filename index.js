@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 export default function generate(fn){
 
-    let subscriptions = []
+    
     let globalStore = {
+        subscriptions : [],
         current : fn((merge)=>{
 
             if (typeof (merge)==="function"){
@@ -10,7 +11,7 @@ export default function generate(fn){
                 merge = merge(globalStore.current)
             }
 
-            globalStore.current = {...globalStore.current,...merge}
+            globalStore.current = Object.assign({}, globalStore.current, merge)
 
             subscriptions.forEach(sub=>sub(globalStore.current))
         },
@@ -48,9 +49,9 @@ export default function generate(fn){
 
                     
                 }
-                subscriptions.push(comparator)
+                globalStore.subscriptions.push(comparator)
 
-                return ()=>(subscriptions = subscriptions.filter(i => i !== comparator))
+                return ()=>(globalStore.subscriptions = globalStore.subscriptions.filter(i => i !== comparator))
                 
             },dependencies || [chosen])
 
@@ -61,8 +62,8 @@ export default function generate(fn){
 
             subscribe : fn =>{
 
-                subscriptions.push(fn)
-                return ()=>(subscriptions = subscriptions.filter(i => i!==fn ))
+                globalStore.subscriptions.push(fn)
+                return ()=>(globalStore.subscriptions = globalStore.subscriptions.filter(i => i!==fn ))
 
             },
 
@@ -70,7 +71,7 @@ export default function generate(fn){
 
             reset : () =>{
 
-                subscriptions = []
+                globalStore.subscriptions = []
                 globalStore.current = {}
 
             },

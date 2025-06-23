@@ -110,6 +110,34 @@ Without `useRef`, stale values may cause missed updates in components due to out
 
 ---
 
+### `v1.0.2` — Refactored Subscription Management
+
+In `v1.0.2`, we moved `subscriptions` into the `globalStore` object to:
+
+- **Keep state and listeners tightly encapsulated** together.
+- **Avoid leaking scope variables** like `listeners` across renders.
+- **Improve future maintainability** and possible multi-store support.
+
+#### Before:
+
+```js
+let listeners = []
+let state = { current: ... }
+```
+
+#### After:
+
+```js
+let globalStore = {
+  subscriptions: [],
+  current: ...
+}
+```
+
+This change is **internal** but improves structure significantly **without affecting the external API**.
+
+---
+
 ## Best Practices
 
 * Use selectors like `state => state.count` to optimize rendering
