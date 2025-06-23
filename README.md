@@ -98,7 +98,7 @@ const [useStore] = generate((set, get) => ({
 
 ---
 
-### `v1.0.2` — Improved React Sync
+### `v1.0.1` — Improved React Sync
 
 * **Introduced `useRef` (`liveChunk`)** to avoid stale closures in effects
 * Selector fallback now spreads state (`{...state}`) to ensure fresh shallow copy
