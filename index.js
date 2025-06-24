@@ -53,7 +53,7 @@ export default function generate(fn){
 
                 return ()=>(globalStore.subscriptions = globalStore.subscriptions.filter(i => i !== comparator))
                 
-            },dependencies || [chosen])
+            },dependencies || [chooser])
 
             return chosen
         },
@@ -71,10 +71,25 @@ export default function generate(fn){
 
             reset : () =>{
 
+                globalStore.subscriptions.forEach(unsub => {if (typeof unsub === "function"){unsub()}})
                 globalStore.subscriptions = []
                 globalStore.current = {}
 
             },
+
+            update: (mergeOrFn) => {
+                const merge =
+                  typeof mergeOrFn === "function"
+                    ? mergeOrFn(globalStore.current)
+                    : mergeOrFn;
+            
+                globalStore.current = {
+                  ...globalStore.current,
+                  ...merge,
+                };
+            
+                globalStore.subscriptions.forEach((sub) => sub(globalStore.current));
+              },
         }
     ]
 }

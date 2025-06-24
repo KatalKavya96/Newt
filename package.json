@@ -12,8 +12,8 @@
     "global-state",
     "lightweight",
     "zustand-alternative",
-    "Newton",
-    "newton-school"
+    "devtools",
+    "typescript"
   ],
   "author": "Kavya Katal",
   "license": "MIT",
