@@ -138,6 +138,21 @@ This change is **internal** but improves structure significantly **without affec
 
 ---
 
+## Version 1.0.4 
+
+#### Fixed: Unnecessary React Re-renders
+- Improved internal comparison using `shallowEqual()` to ensure components re-render **only when relevant state changes**, not due to new object references.
+- Result: Better performance and predictable render behavior.
+
+#### Added: External `update()` API
+- You can now update the store from anywhere — outside of React components — using:
+  ```js
+  storeAPI.update({ key: value });
+  // or
+  storeAPI.update(prev => ({ count: prev.count + 1 }));
+
+#### Improved : External `reset()` API
+
 ## Best Practices
 
 * Use selectors like `state => state.count` to optimize rendering
